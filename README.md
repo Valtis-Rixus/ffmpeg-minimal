@@ -19,7 +19,7 @@ Available in English and French.
 
 ## 📦 Installation
 
-### Manual Installation (Arch Linux / Universal)
+### Manual Installation (Arch Linux)
 
 Since the AUR registrations are currently frozen, you can clone and install this tool locally in seconds:
 
@@ -27,6 +27,18 @@ Since the AUR registrations are currently frozen, you can clone and install this
 git clone https://github.com/Valtis-Rixus/ffmpeg-minimal.git
 cd ffmpeg-minimal
 makepkg -si
+```
+### Manual Installation (Linux Universal)
+
+install the dependencies
+
+```bash
+git clone https://github.com/Valtis-Rixus/ffmpeg-minimal.git
+cd ffmpeg-minimal
+chmod +x ffmpeg-minimal
+sudo cp ffmpeg-minimal /usr/local/bin/
+sudo mkdir -p /usr/local/share/applications
+sudo cp ffmpeg-minimal.desktop /usr/local/share/applications/
 ```
 
 ### From AUR repository
