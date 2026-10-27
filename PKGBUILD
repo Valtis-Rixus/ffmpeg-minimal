@@ -6,7 +6,7 @@ arch=('any')
 license=('MIT')
 depends=('ffmpeg' 'bash' 'fzf' 'awk')
 source=('ffmpeg-minimal.sh' 'ffmpeg-minimal.desktop')
-sha256sums=('e6b68d00dbd7bf755444e4a2d96641da50ed66725619addb7be3387167b457bc'
+sha256sums=('3b575c92e855c7f95f60128ecdfc55b440bb032815254ac659846ca22d82ae8a'
             '6198ce4971dba175ec01aed94022209f62dc4ab7b94a0ab061845da4217b0bf4')
 
 package() {
