@@ -681,8 +681,8 @@ esac
 			
 			while (( a < k)); do
 				
-				layout=$(ffprobe -v error -select_streams a:$a -show_entries stream=channel_layout -of csv=p=0 "$input" 2>/dev/null)
-
+				channels=$(ffprobe -v error -select_streams a:$a -show_entries stream=channels -of csv=p=0 "$input" 2>/dev/null)
+				
 				title=\"Audio_$a\"
 				argument+=" -map 0:a:$a"
 				
@@ -714,14 +714,18 @@ esac
 							;;
 							"libopus")
 							
-								if [[ $layout == stereo ]]; then
+								if [[ $channels == 2 || $channels == 1 ]]; then
 								
-									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 96k -vbr on -compression_level 10 -af \"aformat=channel_layouts=stereo:sample_rates=48000:sample_fmts=fltp\""
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 96k -vbr on -compression_level 10 -ac:a:$a 2"
 									
-								else
+								elif [[ $channels == 6 ]]; then
 									
-									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 96k -vbr on -compression_level 10 -af \"channelmap=channel_layout=5.1,aformat=channel_layouts=5.1:sample_rates=48000:sample_fmts=fltp\""
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 128k -vbr on -compression_level 10 -ac:a:$a 6"
 									
+								elif [[ $channels == 5 ]]; then
+								
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 128k -vbr on -compression_level 10 -ac:a:$a 5"
+								
 								fi
 							;;
 							"ac3")
@@ -760,13 +764,17 @@ esac
 							;;
 							"libopus")
 							
-								if [[ $layout == stereo ]]; then
+								if [[ $channels == 2 || $channels == 1 ]]; then
 								
-									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 128k -vbr on -compression_level 10 -af \"aformat=channel_layouts=stereo:sample_rates=48000:sample_fmts=fltp\""
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 128k -vbr on -compression_level 10 -ac:a:$a 2"
 									
-								else
+								elif [[ $channels == 6 ]]; then
+									
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 192k -vbr on -compression_level 10 -ac:a:$a 6"
+									
+								elif [[ $channels == 5 ]]; then
 								
-								audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 128k -vbr on -compression_level 10 -af \"channelmap=channel_layout=5.1,aformat=channel_layouts=5.1:sample_rates=48000:sample_fmts=fltp\""
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 192k -vbr on -compression_level 10 -ac:a:$a 5"
 								
 								fi
 							;;
@@ -805,14 +813,18 @@ esac
 							;;
 							"libopus")
 							
-								if [[ $layout == stereo ]]; then
+								if [[ $channels == 2 || $channels == 1 ]]; then
 								
-									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 160k -vbr on -compression_level 10 -af \"aformat=channel_layouts=stereo:sample_rates=48000:sample_fmts=fltp\""
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 192k -vbr on -compression_level 10 -ac:a:$a 2"
 									
-								else
+								elif [[ $channels == 6 ]]; then
+									
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 256k -vbr on -compression_level 10 -ac:a:$a 6"
+									
+								elif [[ $channels == 5 ]]; then
 								
-									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 160k -vbr on -compression_level 10 -af \"channelmap=channel_layout=5.1,aformat=channel_layouts=5.1:sample_rates=48000:sample_fmts=fltp\""
-									
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 256k -vbr on -compression_level 10 -ac:a:$a 5"
+								
 								fi
 							;;
 							"ac3")
@@ -850,13 +862,17 @@ esac
 							;;
 							"libopus")
 							
-								if [[ $layout == stereo ]]; then
+								if [[ $channels == 2 || $channels == 1 ]]; then
+								
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 256k -vbr on -compression_level 10 -ac:a:$a 2"
 									
-									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 192k -vbr on -compression_level 10 -af \"aformat=channel_layouts=stereo:sample_rates=48000:sample_fmts=fltp\""
+								elif [[ $channels == 6 ]]; then
 									
-								else
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 512k -vbr on -compression_level 10 -ac:a:$a 6"
 									
-									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 192k -vbr on -compression_level 10 -af \"channelmap=channel_layout=5.1,aformat=channel_layouts=5.1:sample_rates=48000:sample_fmts=fltp\""
+								elif [[ $channels == 5 ]]; then
+								
+									audio_opts="$audio_opts -c:a:$a libopus -b:a:$a 512k -vbr on -compression_level 10 -ac:a:$a 5"
 								
 								fi
 							;;
